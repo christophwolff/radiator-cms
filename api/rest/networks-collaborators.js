@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '~/services/apiClient'
 
 export default {
   create: data => {
@@ -7,20 +7,16 @@ export default {
       // one of "own", "manage", "edit", "readonly",
       permisssion: data.permisssion
     })
-    return axios.post(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/networks/${data.id}/collaborators`,
-      query,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.post(`networks/${data.id}/collaborators`, query, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   delete: data => {
-    return axios.delete(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/networks/${data.id}/collaborators/${data.username}`,
+    return apiClient.delete(
+      `networks/${data.id}/collaborators/${data.username}`,
       null,
       {
         headers: {
@@ -37,8 +33,8 @@ export default {
         permisssion: data.permisssion
       }
     })
-    return axios.put(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/networks/${data.id}/collaborators/${data.username}`,
+    return apiClient.put(
+      `networks/${data.id}/collaborators/${data.username}`,
       query,
       {
         headers: {

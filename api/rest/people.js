@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '~/services/apiClient'
 
 export default {
   create: data => {
@@ -22,16 +22,12 @@ export default {
     if (data.email) {
       query.append('person[email]', data.email)
     }
-    return axios.post(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/people`,
-      query,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.post(`people`, query, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   update: data => {
     const query = new FormData()
@@ -54,15 +50,11 @@ export default {
     if (data.email) {
       query.append('person[email]', data.email)
     }
-    return axios.patch(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/people/${data.personId}`,
-      query,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.patch(`people/${data.personId}`, query, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   }
 }

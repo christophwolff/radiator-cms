@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '~/services/apiClient'
 
 export default {
   create: data => {
@@ -9,28 +9,20 @@ export default {
         permission: data.permission
       }
     })
-    return axios.post(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/podcasts/${data.id}/collaborators`,
-      query,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.post(`podcasts/${data.id}/collaborators`, query, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   delete: data => {
-    return axios.delete(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/podcasts/${data.id}/collaborators`,
-      null,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.delete(`podcasts/${data.id}/collaborators`, null, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   update: data => {
     const query = JSON.stringify({
@@ -39,8 +31,8 @@ export default {
         permission: data.permission
       }
     })
-    return axios.put(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/podcasts/${data.id}/collaborators/${data.username}`,
+    return apiClient.put(
+      `podcasts/${data.id}/collaborators/${data.username}`,
       query,
       {
         headers: {

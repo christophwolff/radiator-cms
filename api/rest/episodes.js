@@ -1,4 +1,4 @@
-import axios from 'axios'
+import apiClient from '~/services/apiClient'
 
 export default {
   create: data => {
@@ -23,51 +23,36 @@ export default {
     if (data.publishState) {
       query.append('episode[publish_state]', data.publishState)
     }
-    return axios.post(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/episodes`,
-      query,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.post(`episodes`, query, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   delete: data => {
-    return axios.delete(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/episodes/${data.episodeId}`,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.delete(`episodes/${data.episodeId}`, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   depublishEpisode: data => {
-    return axios.put(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/episodes/${data.episodeId}/depublish`,
-      null,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.put(`episodes/${data.episodeId}/depublish`, null, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   publishEpisode: data => {
-    return axios.put(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/episodes/${data.episodeId}/publish`,
-      null,
-      {
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.put(`episodes/${data.episodeId}/publish`, null, {
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   },
   update: data => {
     const query = new FormData()
@@ -91,15 +76,11 @@ export default {
     if (data.publishState) {
       query.append('episode[publish_state]', data.publishState)
     }
-    return axios.put(
-      `${process.env.apiBaseUrl}/api/rest/${process.env.backendVersion}/episodes/${data.episodeId}`,
-      query,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: 'Bearer ' + data.token
-        }
+    return apiClient.put(`episodes/${data.episodeId}`, query, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: 'Bearer ' + data.token
       }
-    )
+    })
   }
 }
