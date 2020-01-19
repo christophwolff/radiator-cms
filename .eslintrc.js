@@ -21,6 +21,7 @@ module.exports = {
   rules: {
     'no-console': 0,
     'object-shorthand': 0,
-    'unicorn/throw-new-error': 0
+    'unicorn/throw-new-error': 0,
+    'vue/attributes-order': 0
   }
 }
